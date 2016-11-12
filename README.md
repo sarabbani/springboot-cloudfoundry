@@ -4,34 +4,8 @@
 Make sure you have created a trial account in cloudfoundry @ https://account.run.pivotal.io/sign-up
 
 ##How to Build & Deploy to Cloudfoundry
+The ** cf-maven-plugin ** has been used to push the artifact into cloud foundry and all the values configured inside this plugin are directly mapped with cloud foundary account configuration except the ** server ** which indicate the credentials used to login into your cloud foundry account
 
-The following plugin has been used to push the artifact to cloud foundry and use the below values as reference.
-<plugin>
-				<groupId>org.cloudfoundry</groupId>
-				<artifactId>cf-maven-plugin</artifactId>
-				<version>1.1.4.BUILD-SNAPSHOT</version>
-				<configuration>
-					<target>http://api.run.pivotal.io</target>
-					<org>lmn.om.test</org>
-					<space>development</space>
-					<appname>springcfdemo</appname>
-					<url>springcfdemo.cfapps.io</url>
-					<buildpack>java_buildpack</buildpack>
-					<memory>512</memory>
-					<instances>1</instances>
-					<server>cloud-foundry-credentials</server>
-				</configuration>
-			</plugin>
-      
- All the above values are directly mapped with your pivotol account except the entry "server" which indicates your pivotal account credentials. We need to add the following entry in settings.xml for the credentials integration to work properly.
- 
- <servers>
- <server>
-            <id>cloud-foundry-credentials</id>
-            <username>{your username}</username>
-            <password>{Your password}</password>
-        </server>
-</servers>
-
+This ** server ** entry needs to be configured in your settings.xml as per this documentation https://docs.run.pivotal.io/buildpacks/java/build-tool-int.html
 
 Just run the command "mvn clean install cf:push" to build the artifact and push to cloud foundry account.
